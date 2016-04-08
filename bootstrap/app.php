@@ -23,9 +23,12 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-// $app->withFacades();
+$app->register(Yajra\Oci8\Oci8ServiceProvider::class);
+$app->register(Mnabialek\LaravelSqlLogger\Providers\ServiceProvider::class);
 
-// $app->withEloquent();
+$app->withFacades();
+
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
