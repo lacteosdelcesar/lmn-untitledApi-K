@@ -14,3 +14,11 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
+
+$api = app('Dingo\Api\Routing\Router');
+$api->version('v1', function ($api) {
+    include 'Auth/routes.php';
+    $api->group(['middleware' => 'api.auth'], function ($api) {
+        include 'Empleados/routes.php';
+    });
+});

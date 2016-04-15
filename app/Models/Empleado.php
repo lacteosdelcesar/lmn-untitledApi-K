@@ -7,15 +7,11 @@
 
 namespace App\Models;
 
-use Yajra\Oci8\Eloquent\OracleEloquent;
-use Sofa\Eloquence\Eloquence;
-use Sofa\Eloquence\Mappable;
+use Illuminate\Database\Eloquent\Model;
 
-class Empleado extends OracleEloquent
+class Empleado extends Model
 {
-    use Eloquence, Mappable;
 
-    protected $connection = 'oracle';
     protected $table = 'terceros';
     protected $primaryKey = 'codigo';
     public $incrementing = false;

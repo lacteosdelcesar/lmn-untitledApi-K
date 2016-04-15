@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contrato extends Model
 {
-    protected $connection = 'oracle';
     protected $table = 'contratos';
     protected $primaryKey = 'codigo';
     public $timestamps = false;

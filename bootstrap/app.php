@@ -23,12 +23,13 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-$app->register(Yajra\Oci8\Oci8ServiceProvider::class);
-$app->register(Mnabialek\LaravelSqlLogger\Providers\ServiceProvider::class);
-
 $app->withFacades();
 
 $app->withEloquent();
+
+class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
+
+$app->configure('jwt');
 
 /*
 |--------------------------------------------------------------------------
@@ -66,9 +67,9 @@ $app->singleton(
 //    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+ $app->routeMiddleware([
+     'auth' => App\Resources\Auth\Middleware\Authenticate::class,
+ ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -82,8 +83,17 @@ $app->singleton(
 */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+
+$app->register(Yajra\Oci8\Oci8ServiceProvider::class);
+$app->register(Mnabialek\LaravelSqlLogger\Providers\ServiceProvider::class);
+$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+
+app(Dingo\Api\Auth\Auth::class)->extend('jwt', function ($app) {
+    return new Dingo\Api\Auth\Provider\JWT($app['Tymon\JWTAuth\JWTAuth']);
+});
 
 /*
 |--------------------------------------------------------------------------
