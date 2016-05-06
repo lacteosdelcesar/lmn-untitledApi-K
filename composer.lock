@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d4adc35304fed46a00846d781fea8f37",
-    "content-hash": "e521fa80e83b5ddb34824366a573b2ea",
+    "hash": "61bc1bc144cd3d6a19e1803246ced79a",
+    "content-hash": "db86ae4df456af9945e8a30e8c81df52",
     "packages": [
         {
             "name": "bosnadev/repositories",
@@ -2096,6 +2096,45 @@
                 "psr-3"
             ],
             "time": "2012-12-21 11:40:51"
+        },
+        {
+            "name": "setasign/fpdf",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Setasign/FPDF.git",
+                "reference": "2c68c9e6c034ac3187d25968790139a73184cdb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Setasign/FPDF/zipball/2c68c9e6c034ac3187d25968790139a73184cdb1",
+                "reference": "2c68c9e6c034ac3187d25968790139a73184cdb1",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "fpdf.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "no usage restriction"
+            ],
+            "authors": [
+                {
+                    "name": "Olivier Plathey",
+                    "email": "oliver@fpdf.org",
+                    "homepage": "http://fpdf.org/"
+                }
+            ],
+            "description": "FPDF is a PHP class which allows to generate PDF files with pure PHP. F from FPDF stands for Free: you may use it for any kind of usage and modify it to suit your needs.",
+            "homepage": "http://www.fpdf.org",
+            "keywords": [
+                "fpdf",
+                "pdf"
+            ],
+            "time": "2016-01-01 17:47:15"
         },
         {
             "name": "symfony/console",

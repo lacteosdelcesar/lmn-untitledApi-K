@@ -13,7 +13,8 @@
         "dingo/api": "1.0.x@dev",
         "tymon/jwt-auth": "1.0.*@dev",
         "bosnadev/repositories": " 0.*",
-        "league/fractal": "^0.13.0"
+        "league/fractal": "^0.13.0",
+        "setasign/fpdf": "^1.8"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
