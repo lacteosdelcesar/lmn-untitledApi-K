@@ -9,9 +9,9 @@ $api->group(
     ['prefix' => 'users', 'namespace' => 'App\Resources\Auth\Controllers'],
     function () use ($api) {
         $api->post('/token', 'AuthController@login');
-        $api->get('/refresh_token', 'AuthController@refreshToken');
         $api->post('/', 'UserController@create');
         $api->group(['middleware' => 'api.auth'], function ($api) {
+            $api->get('/refresh_token', 'AuthController@refreshToken');
             $api->get('/my', 'UserController@show');
         });
     }

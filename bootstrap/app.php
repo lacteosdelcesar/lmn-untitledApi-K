@@ -27,9 +27,10 @@ $app->withFacades();
 
 $app->withEloquent();
 
-class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
-
 $app->configure('jwt');
+$app->configure('api');
+
+class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
 
 /*
 |--------------------------------------------------------------------------
@@ -82,14 +83,16 @@ $app->singleton(
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
-$app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
-
 $app->register(Yajra\Oci8\Oci8ServiceProvider::class);
 $app->register(Mnabialek\LaravelSqlLogger\Providers\ServiceProvider::class);
 $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+
+// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
+// $app->register(App\Providers\EventServiceProvider::class);
+
+$app->register(\App\Providers\FractalServiceProvider::class);
 
 app(Dingo\Api\Auth\Auth::class)->extend('jwt', function ($app) {
     return new Dingo\Api\Auth\Provider\JWT($app['Tymon\JWTAuth\JWTAuth']);

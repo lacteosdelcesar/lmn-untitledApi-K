@@ -8,6 +8,7 @@
 namespace App\Resources\Auth;
 
 
+use App\Models\Rol;
 use App\Models\User;
 use Bosnadev\Repositories\Eloquent\Repository;
 
@@ -32,5 +33,10 @@ class UserRepository extends Repository
     {
         $data['password'] = app('hash')->make($data['password']);
         return parent::create($data);
+    }
+
+    public function findRol($nombre)
+    {
+        return Rol::where('nombre', $nombre)->first();
     }
 }

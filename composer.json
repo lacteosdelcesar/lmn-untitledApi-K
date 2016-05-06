@@ -11,8 +11,9 @@
         "yajra/laravel-oci8": "5.2.*",
         "mnabialek/laravel-sql-logger": "^1.0",
         "dingo/api": "1.0.x@dev",
-        "tymon/jwt-auth": "0.6.*@dev",
-        "bosnadev/repositories": " 0.*"
+        "tymon/jwt-auth": "1.0.*@dev",
+        "bosnadev/repositories": " 0.*",
+        "league/fractal": "^0.13.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

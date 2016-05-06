@@ -7,36 +7,57 @@
 
 namespace App\Resources\Empleados;
 
-use App\Models\Empleado;
+use App\Resources\Empleados\Models\Empleado;
 use Bosnadev\Repositories\Eloquent\Repository;
-use Illuminate\Support\Collection;
-use Illuminate\Container\Container as App;
+use Illuminate\Support\Facades\DB;
 
-class EmpleadosRepository  extends Repository
+class EmpleadosRepository extends Repository
 {
-    /**
-     * EmpleadosRepository constructor.
-     */
-    public function __construct(App $app, Collection $collection)
-    {
-        parent::__construct($app, $collection);
-        $this->model->setConnection('oracle');
-    }
-
 
     /**
      * Specify Model class name
      *
-     * @return mixed
+     * @return string
      */
     public function model()
     {
         return Empleado::class;
     }
 
-    public function findBy($attribute, $value, $columns = array('*'))
+    public function find($cedula, $columns = array('*'))
     {
-        $this->applyCriteria();
-        return $this->model->whereRaw("$attribute = $value")->first($columns);
+        $cedula  = str_pad($cedula, 13);
+        return parent::find($cedula, $columns);
+    }
+
+    public function get($limit = 10, $filters)
+    {
+        $query = Empleado::select(DB::raw('DISTINCT(codigo)'));
+        $query = $this->applyFilters($query, $filters);
+        return $query->distinct()->paginate($limit);
+    }
+
+    private function applyFilters($query, $filters)
+    {
+        $distrito = $filters['distrito'] ? $filters['distrito'] : '';
+        $area = $filters['area'] ? $filters['area'] : '';
+        $vinculacion = $filters['vinculacion'] ? $filters['vinculacion'] : '';
+        $cargo = $filters['cargo'] ? $filters['cargo'] : '';
+        $query->whereHas('contrato', function ($q) use($distrito, $area, $vinculacion, $cargo) {
+            if ($distrito) {
+                $q->where('id_co', '=', $distrito);
+            }
+            if ($area) {
+                $area = str_pad($area, 8);
+                $q->where('id_ccosto', '=', $area);
+            }
+            if ($vinculacion) {
+                $q->where('id_emp', '=', $vinculacion);
+            }
+            if ($cargo) {
+                $q->where('id_cargo', '=', $cargo);
+            }
+        });
+        return $query;
     }
 }

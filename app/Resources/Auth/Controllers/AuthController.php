@@ -2,7 +2,7 @@
 
 namespace App\Resources\Auth\Controllers;
 
-use App\Core\Controllers\BaseController;
+use App\Core\BaseController;
 use Illuminate\Http\Response;
 
 class AuthController extends BaseController

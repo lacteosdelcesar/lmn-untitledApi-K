@@ -5,16 +5,17 @@
  * Time: 08:48 PM
  */
 
-namespace App\Core\Controllers;
+namespace App\Core;
 
 
 use Bosnadev\Repositories\Eloquent\Repository;
+use Bosnadev\Repositories\Exceptions\RepositoryException;
+use Dingo\Api\Http\Request;
+use Dingo\Api\Http\Response;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Container\Container;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\MessageBag;
-use Laravel\Lumen\Routing\Controller;
 
 class BaseController extends Controller
 {

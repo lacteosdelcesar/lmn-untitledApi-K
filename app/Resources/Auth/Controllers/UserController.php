@@ -8,7 +8,7 @@
 namespace App\Resources\Auth\Controllers;
 
 
-use App\Core\Controllers\BaseController;
+use App\Core\BaseController;
 use App\Resources\Auth\UserRepository;
 use App\Resources\Auth\UserTransformer;
 
