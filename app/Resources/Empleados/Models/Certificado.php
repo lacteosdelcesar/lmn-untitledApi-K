@@ -5,7 +5,7 @@
  * Time: 07:53 PM
  */
 
-namespace App\Models;
+namespace App\Resources\Empleados\Models;
 
 
 use App\Resources\Empleados\Models\Empleado;

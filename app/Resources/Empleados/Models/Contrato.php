@@ -64,6 +64,11 @@ class Contrato extends OModel
         return ($this->fecha_cont_ha == '99999999') ? 'a término indefinido' : 'a término fijo';
     }
 
+    public function getIdTercAttribute($value)
+    {
+        return substr($value, 0, 13);
+    }
+
     public function getSalarioPromedioAttribute()
     {
         $sql = 'select * from('.

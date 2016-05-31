@@ -5,7 +5,7 @@
  * Time: 09:41 AM
  */
 
-namespace App\Resources\Empleados;
+namespace App\Resources\Empleados\Repositories;
 
 use App\Resources\Empleados\Models\Empleado;
 use Bosnadev\Repositories\Eloquent\Repository;

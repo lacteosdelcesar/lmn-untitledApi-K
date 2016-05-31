@@ -11,6 +11,8 @@ $api->group(
         $api->get('/', 'EmpleadosController@index');
         $api->get('/syncup', 'SyncController@up');
         $api->get('/{cedula}', 'EmpleadosController@show');
-        $api->get('/{cedula}/certificado/{tipo}', 'CertificadosController@create');
+        $api->get('/{cedula}/certificado_laboral/{tipo}', 'CertificadosController@create');
     }
 );
+
+$api->get('/probando_probando', 'App\Resources\Empleados\Controllers\EmpleadosController@test');

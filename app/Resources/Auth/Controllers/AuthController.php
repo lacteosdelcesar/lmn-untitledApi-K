@@ -3,16 +3,24 @@
 namespace App\Resources\Auth\Controllers;
 
 use App\Core\BaseController;
+use App\Resources\Auth\UserRepository;
 use Illuminate\Http\Response;
+
 
 class AuthController extends BaseController
 {
+
+    protected function repository()
+    {
+        return UserRepository::class;
+    }
+
     /**
      * @return mixed
      */
     public function login()
     {
-        $credentials = $this->request->only('nombre', 'password');
+        $credentials = $this->request->only('username', 'password');
 
         if (!$token = \JWTAuth::attempt($credentials)) {
             return response()->json(['message' => 'invalid_credentials',], Response::HTTP_UNAUTHORIZED);

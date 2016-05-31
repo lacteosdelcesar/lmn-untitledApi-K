@@ -8,6 +8,8 @@
 namespace App\Resources\Empleados\Models;
 
 use App\Resources\Empleados\Models\Lib\OModel;
+use App\Resources\Empleados\Models\Relations\HasOneContrato;
+use App\Resources\QuejasyReclamos\Models\SolicitudPQR;
 use Illuminate\Database\Eloquent\Builder;
 
 class Empleado extends OModel
@@ -33,13 +35,18 @@ class Empleado extends OModel
 
     public function contrato()
     {
-        return $this->hasOne(Contrato::class, 'id_terc', 'codigo')
+        return $this->hasOneContrato(Contrato::class, 'id_terc', 'codigo')
             ->orderBy('fecha_ingreso', 'desc');
     }
 
     public function contratos()
     {
         return $this->hasMany(Contrato::class, 'id_terc', 'codigo');
+    }
+
+    public function solicitudes()
+    {
+        return $this->hasMany(SolicitudPQR::class, 'cedula_empleado', 'codigo');
     }
 
     public function getCedulaAttribute()
@@ -49,7 +56,7 @@ class Empleado extends OModel
 
     public function getCodigoAttribute($value)
     {
-        return str_pad($value, 15);
+        return str_pad($value, 13);
     }
 
     public function getNombreAttribute()
@@ -60,5 +67,21 @@ class Empleado extends OModel
     public function getApellidosAttribute()
     {
         return trim($this->apellido1).' '.trim($this->apellido2);
+    }
+
+    public function getNombreCompletoAttribute()
+    {
+        return trim($this->nombres).' '.trim($this->apellido1).' '.trim($this->apellido2);
+    }
+
+    public function hasOneContrato($related, $foreignKey = null, $localKey = null)
+    {
+        $foreignKey = $foreignKey ?: $this->getForeignKey();
+
+        $instance = new $related;
+
+        $localKey = $localKey ?: $this->getKeyName();
+
+        return new HasOneContrato($instance->newQuery(), $this, $instance->getTable().'.'.$foreignKey, $localKey);
     }
 }

@@ -11,6 +11,10 @@
 |
 */
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Authorization, Content-Type');
+
 $app = require __DIR__.'/../bootstrap/app.php';
 
 /*
@@ -25,4 +29,5 @@ $app = require __DIR__.'/../bootstrap/app.php';
 |
 */
 
-$app->run();
+//$app->run();
+$app->run($app['request']);

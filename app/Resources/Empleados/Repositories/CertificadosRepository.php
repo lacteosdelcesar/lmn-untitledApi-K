@@ -5,9 +5,9 @@
  * Time: 09:41 AM
  */
 
-namespace App\Resources\Empleados;
+namespace App\Resources\Empleados\Repositories;
 
-use App\Models\Certificado;
+use App\Resources\Empleados\Models\Certificado;
 use Bosnadev\Repositories\Eloquent\Repository;
 
 class CertificadosRepository extends Repository

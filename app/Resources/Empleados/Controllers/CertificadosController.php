@@ -9,8 +9,8 @@ namespace app\Resources\Empleados\Controllers;
 
 
 use App\Core\BaseController;
-use App\Models\Certificado;
-use App\Resources\Empleados\CertificadosRepository;
+use App\Resources\Empleados\Models\Certificado;
+use App\Resources\Empleados\Repositories\CertificadosRepository;
 use FPDF;
 use Illuminate\Support\Facades\DB;
 
@@ -121,7 +121,7 @@ class CertificadosController extends BaseController
         $pdf->SetFont('Arial');
         $pdf->Cell(0, 0, 'Jefe de Talento Humano', 0, 2, 'C');
         $pdf->Image('assets/images/Pie.JPG', 1, 25.5, 19, 'JPG');
-        $pdf->Output();
+        $pdf->Output($certificado->id.'.pdf', 'I');
         return true;
     }
 

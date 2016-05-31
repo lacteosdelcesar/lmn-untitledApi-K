@@ -8,9 +8,10 @@
 namespace App\Resources\Auth;
 
 
-use App\Models\Rol;
-use App\Models\User;
+use App\Resources\Auth\Models\Rol;
+use App\Resources\Auth\Models\User;
 use Bosnadev\Repositories\Eloquent\Repository;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends Repository
 {
@@ -31,12 +32,23 @@ class UserRepository extends Repository
      */
     public function create(array $data)
     {
-        $data['password'] = app('hash')->make($data['password']);
+        $data['password'] = Hash::make($data['password']);
         return parent::create($data);
     }
 
     public function findRol($nombre)
     {
         return Rol::where('nombre', $nombre)->first();
+    }
+
+    public function checkUser($credentials)
+    {
+        if($user = $this->findBy('username', $credentials['username'])){
+            if(Hash::check($credentials['password'], $user->password)){
+                $user->load('rol');
+                return $user;
+            }
+        }
+        return false;
     }
 }

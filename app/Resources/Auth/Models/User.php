@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Resources\Auth\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
@@ -19,7 +19,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'nombre', 'password', 'rol_id', 'distrito_id', 'area_id'
+        'username', 'password', 'rol_id', 'distrito_id', 'area_id'
     ];
 
     /**
@@ -31,7 +31,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    protected $username = 'nombre';
+
+    protected $username = 'username';
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -58,6 +59,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        $this->load('rol');
+        return ['user' => $this->toArray()];
     }
 }

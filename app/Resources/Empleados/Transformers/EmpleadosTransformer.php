@@ -18,7 +18,6 @@ class EmpleadosTransformer extends TransformerAbstract
 
     public function transform(Empleado $empleado, $params = [])
     {
-        echo print_r($params);
         $payload = [
             'cedula'    => $empleado->cedula,
             'nombre'    => $empleado->nombre,

@@ -27,11 +27,6 @@ $app->withFacades();
 
 $app->withEloquent();
 
-$app->configure('jwt');
-$app->configure('api');
-
-class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
-
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -64,13 +59,14 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//    App\Http\Middleware\ExampleMiddleware::class
-// ]);
-
- $app->routeMiddleware([
-     'auth' => App\Resources\Auth\Middleware\Authenticate::class,
+ $app->middleware([
+//    App\Middleware\Cors::class
  ]);
+
+$app->routeMiddleware([
+    'cors' => App\Middleware\Cors::class,
+    'auth' => App\Resources\Auth\Middleware\Authenticate::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +89,13 @@ $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(\App\Providers\FractalServiceProvider::class);
+$app->register(\App\Providers\CatchAllOptionsRequestsProvider::class);
+
+$app->configure('jwt');
+$app->configure('auth');
+
+class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
+class_alias('Tymon\JWTAuth\Facades\JWTFactory', 'JWTFactory');
 
 app(Dingo\Api\Auth\Auth::class)->extend('jwt', function ($app) {
     return new Dingo\Api\Auth\Provider\JWT($app['Tymon\JWTAuth\JWTAuth']);

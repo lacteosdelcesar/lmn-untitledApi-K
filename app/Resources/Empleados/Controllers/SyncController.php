@@ -46,7 +46,7 @@ class SyncController extends BaseController
                 }
 
                 // si el empleado ya tiene un usuario, actualizo el rol si cambio
-                if($usuario = $this->repository->findBy('nombre', $empleado->cedula)){
+                if($usuario = $this->repository->findBy('username', $empleado->cedula)){
                     if($usuario->rol_id != $rol){
                         $usuario->rol_id = $rol;
                         $usuario->save();
@@ -56,7 +56,7 @@ class SyncController extends BaseController
                 // si no, creo un nuevo usuario
                 else {
                     $this->repository->create([
-                        'nombre' => $empleado->cedula,
+                        'username' => $empleado->cedula,
                         'password' => $empleado->cedula,
                         'rol_id' => $rol
                     ]);

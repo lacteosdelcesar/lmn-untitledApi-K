@@ -11,6 +11,7 @@ namespace App\Resources\Auth\Controllers;
 use App\Core\BaseController;
 use App\Resources\Auth\UserRepository;
 use App\Resources\Auth\UserTransformer;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends BaseController
 {
@@ -44,5 +45,21 @@ class UserController extends BaseController
     {
         $user = $this->user();
         return $this->response->item($user, new UserTransformer());
+    }
+
+    function changePassword()
+    {
+        $user = $this->user();
+        $data = $this->request->all();
+        if($user = $this->repository->checkUser(['username' => $user->username, 'password' => $data['password']])){
+            $user->password = Hash::make($data['new_password']);
+            if($user->save()){
+                return $this->response->array(['mensaje' => 'contraseña actualizada']);
+            } else {
+                return $this->response->errorInternal('no se pudo actualizar la contraseña');
+            }
+        } else {
+            $this->response->errorUnauthorized();
+        }
     }
 }
