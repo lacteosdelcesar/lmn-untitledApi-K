@@ -8,7 +8,7 @@
 namespace App\Resources\Auth;
 
 
-use App\Models\User;
+use App\Resources\Auth\Models\User;
 use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract

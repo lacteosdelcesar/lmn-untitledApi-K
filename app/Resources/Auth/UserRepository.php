@@ -19,7 +19,7 @@ class UserRepository extends Repository
     /**
      * Specify Model class name
      *
-     * @return mixed
+     * @return User
      */
     public function model()
     {
@@ -36,11 +36,28 @@ class UserRepository extends Repository
         return parent::create($data);
     }
 
+    /**
+     * @param $nombre
+     * @return Rol
+     */
     public function findRol($nombre)
     {
         return Rol::where('nombre', $nombre)->first();
     }
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function allRoles()
+    {
+        return Rol::all()->toArray();
+    }
+
+    /**
+     * @param $credentials
+     * @return bool|User
+     */
     public function checkUser($credentials)
     {
         if($user = $this->findBy('username', $credentials['username'])){

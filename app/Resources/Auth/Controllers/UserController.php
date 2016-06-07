@@ -21,24 +21,29 @@ class UserController extends BaseController
         return UserRepository::class;
     }
 
+    public function index()
+    {
+        $users = $this->repository->all();
+        return $this->response->collection($users, new UserTransformer);
+    }
+
     public function create()
     {
         $validator = \Validator::make($this->request->all(), [
-            'nombre' => 'required|unique:users',
-            'password' => 'required',
+            'username' => 'required|unique:users',
             'rol_id' => 'required',
         ], [
-            'nombre.unique' => 'Nombre de usuario ya registrado',
+            'username.unique' => 'Nombre de usuario ya registrado',
         ]);
         if ($validator->fails()) {
             return $this->errorValidator($validator->messages());
         }
 
-        $user = $this->repository->create($this->request->all());
-        
-        // Registered Event
-        $token = \Auth::fromUser($user);
-        return $this->response->array(['token' => $token]);
+        $data = $this->request->all();
+        $data['password'] = $data['username'];
+        $user = $this->repository->create($data);
+        $user->load('rol');
+        return $this->response->array(['data' => $user]);
     }
 
     public function show()
@@ -61,5 +66,25 @@ class UserController extends BaseController
         } else {
             $this->response->errorUnauthorized();
         }
+    }
+
+    function resetPassword($user_id)
+    {
+        $user = $this->repository->find($user_id);
+        if($user){
+            $user->password = Hash::make($user->username);
+            if($user->save()){
+                return $this->response->array(['mensaje' => 'contraseña actualizada']);
+            } else {
+                return $this->response->errorInternal('no se pudo actualizar la contraseña');
+            }
+        } else {
+            $this->response->errorNotFound('no se encuentre el usuario');
+        }
+    }
+    
+    function getRoles()
+    {
+        return $this->response->array($this->repository->allRoles());
     }
 }

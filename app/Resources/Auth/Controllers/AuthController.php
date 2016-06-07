@@ -3,8 +3,9 @@
 namespace App\Resources\Auth\Controllers;
 
 use App\Core\BaseController;
+use App\Resources\Auth\Models\Rol;
+use App\Resources\Auth\Models\User;
 use App\Resources\Auth\UserRepository;
-use Illuminate\Http\Response;
 
 
 class AuthController extends BaseController
@@ -21,12 +22,20 @@ class AuthController extends BaseController
     public function login()
     {
         $credentials = $this->request->only('username', 'password');
+        $is_auth = true;
 
         if (!$token = \JWTAuth::attempt($credentials)) {
-            return response()->json(['message' => 'invalid_credentials',], Response::HTTP_UNAUTHORIZED);
+            $is_auth = $credentials['username'] == getenv('APP_SU_NAME') && $credentials['password'] == getenv('APP_SU_PASSWORD');
+            if ($is_auth) {
+                $user = new User([
+                    'username' => $credentials['username'],
+                    'rol_id' => 6
+                ]);
+                $token = \JWTAuth::fromUser($user);
+            }
         }
 
-        return $this->response->array(compact('token'));
+        return $is_auth ? $this->response->array(compact('token')): $this->response->errorUnauthorized('invalid_credentials');
     }
 
     /**
