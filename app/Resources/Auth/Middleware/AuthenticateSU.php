@@ -3,7 +3,6 @@
 namespace App\Resources\Auth\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Factory as Auth;
 
 class AuthenticateSU
 {
@@ -18,8 +17,9 @@ class AuthenticateSU
      */
     public function handle($request, Closure $next)
     {
-        $user = \JWTAuth::parseToken()->authenticate();
-        if (!$user && $user['username'] == getenv('APP_SU_NAME')) {
+        $token = \JWTAuth::getToken();
+        $user = \JWTAuth::getJWTProvider()->decode($token)['user'];
+        if (!$user || $user['username'] != getenv('APP_SU_NAME')) {
             return response('Unauthorized.', 401);
         }
 
