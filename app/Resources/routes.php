@@ -18,9 +18,9 @@ $app->get('/', function () use ($app) {
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     include 'Auth/routes.php';
+    include 'Empleados/routes.php';
     $api->group(['middleware' => 'api.auth'], function ($api) {
         include 'JornadasLaborales/routes.php';
-        include 'Empleados/routes.php';
         include 'QuejasyReclamos/routes.php';
     });
 });
