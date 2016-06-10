@@ -66,8 +66,8 @@ class SyncController extends BaseController
         }
 
         return $this->response->array([
-            'empleados agregados' => $count_nuevos,
-            'empleados actualizados' => $count_actualizados,
+            'empleados_agregados' => $count_nuevos,
+            'empleados_actualizados' => $count_actualizados,
             'total_empleados' => $count_total
         ]);
     }
