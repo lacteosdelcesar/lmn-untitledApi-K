@@ -30,11 +30,11 @@ class EmpleadosRepository extends Repository
         return parent::find($cedula, $columns);
     }
 
-    public function get($limit = 10, $filters)
+    public function get($filters)
     {
-        $query = Empleado::select(DB::raw('DISTINCT(codigo)'));
+        $query = Empleado::query();
         $query = $this->applyFilters($query, $filters);
-        return $query->distinct()->paginate($limit);
+        return $query->get();
     }
 
     private function applyFilters($query, $filters)

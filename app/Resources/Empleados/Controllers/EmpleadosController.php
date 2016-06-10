@@ -39,9 +39,8 @@ class EmpleadosController extends BaseController
         $filters['area'] = $this->request->query('area', '');
         $filters['vinculacion'] = $this->request->query('vinculacion', '');
         $filters['cargo'] = $this->request->query('cargo', '');
-        $limit = $this->request->query('limit', 10);
-        $empleados = $this->repository->get($limit, $filters);
-        return $this->response->paginator($empleados, new EmpleadosTransformer);
+        $empleados = $this->repository->get($filters);
+        return $this->response->collection($empleados, new EmpleadosTransformer);
     }
 
     public function show($cedula)

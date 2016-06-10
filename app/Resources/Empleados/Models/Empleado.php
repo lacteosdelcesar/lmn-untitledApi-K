@@ -29,7 +29,7 @@ class Empleado extends OModel
         parent::boot();
 
         static::addGlobalScope('emp', function(Builder $builder) {
-            $builder->where('ind_empl', '=', 1);
+            $builder->distinct()->where('ind_empl', '=', 1);
         });
     }
 
