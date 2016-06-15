@@ -27,9 +27,31 @@ class CertificadosController extends BaseController
         return CertificadosRepository::class;
     }
 
-    public function show()
+    public function show($codigo)
     {
+        $certificado = $this->repository->find($codigo);
+        if(!$certificado){
+            return $this->response->errorNotFound('el codigo no existe');
+        } else {
+            $content = $this->makeContent($certificado);
+            return $this->response->array([
+                'certificado' => [
+                    'id' => $certificado->id,
+                    'fecha' => $certificado->fecha
+                ],
+                'content' => $content
+            ]);
+        }
+    }
 
+    public function download($codigo)
+    {
+        $certificado = $this->repository->find($codigo);
+        if(!$certificado){
+            return $this->response->errorNotFound('el codigo no existe');
+        } else {
+            return $this->crearPdf($certificado);
+        }
     }
 
     public function create($empleado_id, $tipo_crt)
@@ -59,9 +81,6 @@ class CertificadosController extends BaseController
 
     public function crearPdf(Certificado $certificado)
     {
-        $empleado = $certificado->empleado;
-        //echo print_r($empleado);
-        //$empleado = new Empleado();
         $pdf = new FPDF('P', 'cm', 'Letter');
         //$pdf = new FPDF_Protection();
         //$pdf->SetProtection(array('print'));
@@ -86,6 +105,26 @@ class CertificadosController extends BaseController
         $pdf->Ln(2);
         $pdf->SetFont('Arial');
 
+        $content = $this->makeContent($certificado);
+
+        $pdf->MultiCell(0, 0.6, utf8_decode($content), 0, 'J', false);
+        $pdf->Ln(2);
+        $pdf->Cell(0, 0, utf8_decode('Esta certificación se expide a solicitud del interesado.'), 0, 2);
+        $pdf->Ln(5);
+//        $pdf->Image('assets/images/Firma.png', 8, 19, 7, 'PNG'); //todo: descomentar
+        $pdf->SetFont('Arial', 'B');
+        $pdf->Cell(0, 0, 'MAYRA ALEJANDRA CARO DAZA', 0, 2, 'C');
+        $pdf->Ln(0.5);
+        $pdf->SetFont('Arial');
+        $pdf->Cell(0, 0, 'Jefe de Talento Humano', 0, 2, 'C');
+        $pdf->Image('assets/images/Pie.JPG', 1, 25.5, 19, 'JPG');
+        $pdf->Output($certificado->id.'.pdf', 'I');
+        return true;
+    }
+
+    private function makeContent(Certificado $certificado)
+    {
+        $empleado = $certificado->empleado;
         $contratoEmpleado = $empleado->contrato;
         $salario = '';
         if($certificado->tipo == 2){
@@ -104,25 +143,13 @@ class CertificadosController extends BaseController
             $feca_contratacion = ' mediante contrato '.$contratoEmpleado->tipo.', '.$feca_contratacion;
         }
 
-        $pdf->MultiCell(0, 0.6, utf8_decode('Que el señor(a) '
+        return 'Que el señor(a) '
             .strtoupper($empleado->nombre.' '.$empleado->apellidos.' ')
             .'con cédula de ciudadanía '.$empleado->cedula
             .', '.$labora.' en esta compañía en el cargo de '
 //            .$contratoEmpleado->cargo->descripcion .', '
             . $feca_contratacion
-            .$salario.'.'), 0, 'J', false);
-        $pdf->Ln(2);
-        $pdf->Cell(0, 0, utf8_decode('Esta certificación se expide a solicitud del interesado.'), 0, 2);
-        $pdf->Ln(5);
-//        $pdf->Image('assets/images/Firma.png', 8, 19, 7, 'PNG'); //todo: descomentar
-        $pdf->SetFont('Arial', 'B');
-        $pdf->Cell(0, 0, 'MAYRA ALEJANDRA CARO DAZA', 0, 2, 'C');
-        $pdf->Ln(0.5);
-        $pdf->SetFont('Arial');
-        $pdf->Cell(0, 0, 'Jefe de Talento Humano', 0, 2, 'C');
-        $pdf->Image('assets/images/Pie.JPG', 1, 25.5, 19, 'JPG');
-        $pdf->Output($certificado->id.'.pdf', 'I');
-        return true;
+            .$salario.'.';
     }
 
     private function formatFecha($fecha = null)
