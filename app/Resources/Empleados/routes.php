@@ -14,6 +14,8 @@ $api->group(
             $api->get('/{cedula}', 'EmpleadosController@show');
             $api->get('/{cedula}/certificado_laboral/{tipo}', 'CertificadosController@create');
         });
+        $api->get('/certificado_laboral/{codigo}/pdf', 'CertificadosController@download');
+        $api->get('/certificado_laboral/{codigo}', 'CertificadosController@show');
     }
 );
 
