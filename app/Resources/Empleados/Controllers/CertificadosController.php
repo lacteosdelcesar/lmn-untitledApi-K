@@ -111,7 +111,7 @@ class CertificadosController extends BaseController
         $pdf->Ln(2);
         $pdf->Cell(0, 0, utf8_decode('Esta certificación se expide a solicitud del interesado.'), 0, 2);
         $pdf->Ln(5);
-//        $pdf->Image('assets/images/Firma.png', 8, 19, 7, 'PNG'); //todo: descomentar
+        $pdf->Image('assets/images/Firma.png', 8, 19, 7, 'PNG'); //todo: descomentar
         $pdf->SetFont('Arial', 'B');
         $pdf->Cell(0, 0, 'MAYRA ALEJANDRA CARO DAZA', 0, 2, 'C');
         $pdf->Ln(0.5);
@@ -147,7 +147,7 @@ class CertificadosController extends BaseController
             .strtoupper($empleado->nombre.' '.$empleado->apellidos.' ')
             .'con cédula de ciudadanía '.$empleado->cedula
             .', '.$labora.' en esta compañía en el cargo de '
-//            .$contratoEmpleado->cargo->descripcion .', '
+            .$contratoEmpleado->cargo->descripcion .', '
             . $feca_contratacion
             .$salario.'.';
     }

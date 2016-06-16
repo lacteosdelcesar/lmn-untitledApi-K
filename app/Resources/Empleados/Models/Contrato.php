@@ -18,7 +18,7 @@ class Contrato extends OModel
     protected $primaryKey = 'codigo';
     public $incrementing = false;
     public $timestamps = false;
-    public $with = ['vinculacion', 'distrito', 'area'];
+    public $with = ['vinculacion', 'distrito', 'area', 'cargo'];
 
     protected $queryable = [
         'codigo',
