@@ -42,6 +42,7 @@ class UserController extends BaseController
         $data = $this->request->all();
         $data['password'] = $data['username'];
         $user = $this->repository->create($data);
+        $user->areas()->sync($data['areas']);
         $user->load('rol');
         return $this->response->array(['data' => $user]);
     }

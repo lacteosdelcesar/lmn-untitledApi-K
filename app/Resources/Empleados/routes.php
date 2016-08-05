@@ -19,4 +19,6 @@ $api->group(
     }
 );
 
-//$api->get('/probando_probando', 'App\Resources\Empleados\Controllers\EmpleadosController@test');
+$api->get('/areas', ['middleware' => 'auth_su', 'uses' => 'App\Resources\Empleados\Controllers\AreasController@get']);
+
+$api->get('/distritos', 'App\Resources\Empleados\Controllers\DistritosController@index');

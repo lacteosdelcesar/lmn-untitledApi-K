@@ -2,12 +2,15 @@
 
 namespace App\Resources\Auth\Models;
 
+use App\Resources\Empleados\Models\AreasUsuarioPivot;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Resources\Empleados\Models\Area;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
@@ -19,7 +22,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'username', 'password', 'rol_id', 'distrito_id', 'area_id'
+        'username', 'password', 'rol_id', 'distrito', 'area_id'
     ];
 
     /**
@@ -40,6 +43,16 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function rol()
     {
         return $this->belongsTo(Rol::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function areas()
+    {
+        $instance = new Area;
+        $instance->setConnection('mysql');
+        return new BelongsToMany($instance->newQuery(), $this, 'user_areas', 'user_id', 'codigo_area', 'areas');
     }
 
     /**
