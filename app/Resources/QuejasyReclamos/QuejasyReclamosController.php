@@ -95,7 +95,7 @@ class QuejasyReclamosController extends BaseController
     public function destroy($id)
     {
         if($this->repository->delete($id)){
-            return $this->response->arrya(['mensaje' => 'solicitud eliminada']);
+            return $this->response->array(['mensaje' => 'solicitud eliminada']);
         } else {
             return $this->response->errorInternal('no se pudo eliminar la solicitud');
         }
