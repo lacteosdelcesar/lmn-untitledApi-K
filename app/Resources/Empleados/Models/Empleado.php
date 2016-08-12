@@ -44,6 +44,12 @@ class Empleado extends OModel
         return $this->hasMany(Contrato::class, 'id_terc', 'codigo');
     }
 
+    public function salario()
+    {
+        return $this->hasOneContrato(Salario::class, 'id_terc', 'codigo')
+            ->orderBy('fecha_ingreso', 'desc');
+    }
+
     public function solicitudes()
     {
         return $this->hasMany(SolicitudPQR::class, 'cedula_empleado', 'codigo');

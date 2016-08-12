@@ -18,7 +18,7 @@ class Contrato extends OModel
     protected $primaryKey = 'codigo';
     public $incrementing = false;
     public $timestamps = false;
-    public $with = ['vinculacion', 'distrito', 'area', 'cargo'];
+    public $with = ['vinculacion', 'distrito', 'area'];
 
     protected $queryable = [
         'codigo',
@@ -31,7 +31,7 @@ class Contrato extends OModel
         'id_emp',
         'id_co',
         'id_ccosto',
-        'id_cargo'
+//        'id_cargo'
     ];
 
     public function empleado()
