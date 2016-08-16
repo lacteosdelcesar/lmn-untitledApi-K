@@ -9,6 +9,7 @@ class DetallesBonificacion extends Model
 
     protected $primaryKey = 'bonificacion_id';
     public $incrementing = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'bonificacion_id',

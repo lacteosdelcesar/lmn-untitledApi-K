@@ -23,6 +23,8 @@ class EmpleadosTransformer extends TransformerAbstract
             'nombre'    => $empleado->nombre,
             'apellidos' => $empleado->apellidos
         ];
+        $empleado = $empleado->toArray();
+        if(array_key_exists('salario', $empleado)) $payload['salario'] = $empleado['salario'];
         return $payload;
     }
 

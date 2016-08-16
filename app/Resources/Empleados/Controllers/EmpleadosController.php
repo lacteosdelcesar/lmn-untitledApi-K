@@ -39,8 +39,12 @@ class EmpleadosController extends BaseController
         $filters['area'] = $this->request->query('area', '');
         $filters['vinculacion'] = $this->request->query('vinculacion', '');
         $filters['cargo'] = $this->request->query('cargo', '');
-        $empleados = $this->repository->get($filters);
-        return $this->response->collection($empleados, new EmpleadosTransformer);
+        if(strpos($this->request->query('include'), 'salario') !== false){
+            $empleados = $this->repository->with(['salario']);
+        }else {
+            $empleados = $this->repository;
+        }
+        return $this->response->collection($empleados->get($filters), new EmpleadosTransformer);
     }
 
     public function show($cedula)

@@ -17,6 +17,9 @@ class Bonificacion extends Novedad
 
     protected $casts = ['valor' => 'float', 'por_remplazo' => 'boolean'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function detalles_remplazo()
     {
         return $this->hasOne(DetallesBonificacion::class);

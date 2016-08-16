@@ -11,7 +11,7 @@ class BonificacionesTransformer extends TransformerAbstract
         $payload = [
             'empleado' => [
                 'nombre' => $bonificacion->empleado->nombre,
-                'apellido' => $bonificacion->empleado->apellidos,
+                'apellidos' => $bonificacion->empleado->apellidos,
                 'cedula' => $bonificacion->empleado->cedula,
                 'salario' => $bonificacion->empleado->salario,
             ],
