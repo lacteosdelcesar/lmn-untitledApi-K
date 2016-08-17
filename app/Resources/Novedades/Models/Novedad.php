@@ -2,9 +2,8 @@
 
 
 use App\Resources\Empleados\Models\Empleado;
-use Illuminate\Database\Eloquent\Model;
 
-class Novedad extends Model
+trait Novedad
 {
 
     public function empleado()

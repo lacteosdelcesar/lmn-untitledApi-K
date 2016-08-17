@@ -3,12 +3,13 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Bonificacion extends Novedad
+class Bonificacion extends Model
 {
+    use Novedad;
+
     protected $table = 'bonificaciones';
 
     protected $fillable = [
-        'id',
         'cedula_empleado',
         'periodo_id',
         'valor',

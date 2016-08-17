@@ -22,5 +22,6 @@ $api->version('v1', function ($api) {
     $api->group(['middleware' => 'api.auth'], function ($api) {
         include 'JornadasLaborales/routes.php';
         include 'QuejasyReclamos/routes.php';
+        include 'Novedades/routes.php';
     });
 });

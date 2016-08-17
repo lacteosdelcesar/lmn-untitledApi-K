@@ -14,5 +14,11 @@ $api->group(
             $api->put('/{id}', 'BonificacionesController@update');
             $api->delete('/{id}', 'BonificacionesController@destroy');
         });
+        $api->group(['prefix' => 'viajes', 'namespace' => 'Viajes'],function () use ($api) {
+            $api->get('/', 'ViajesController@index');
+            $api->post('/', 'ViajesController@store');
+            $api->put('/{id}', 'ViajesController@update');
+            $api->delete('/{id}', 'ViajesController@destroy');
+        });
     }
 );
