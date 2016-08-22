@@ -1,7 +1,6 @@
 <?php namespace App\Resources\Novedades\Bonificaciones;
 
 use App\Resources\Novedades\Models\Bonificacion;
-use App\Resources\Novedades\Models\Periodo;
 use Bosnadev\Repositories\Eloquent\Repository;
 
 class BonificacionesRepository extends Repository
@@ -27,8 +26,7 @@ class BonificacionesRepository extends Repository
         $bonificacion = parent::create([
             'cedula_empleado' => $data['cedula_empleado'],
             'valor' => $data['valor'],
-            'por_remplazo' => $data['por_remplazo'],
-            'periodo_id' => Periodo::actual()->id
+            'por_remplazo' => $data['por_remplazo']
         ]);
         if($bonificacion){
             if($data['por_remplazo']){
@@ -44,8 +42,7 @@ class BonificacionesRepository extends Repository
         if(!array_key_exists('detalles_remplazo', $data)) $data['por_remplazo'] = false;
         $result = $bonificacion->update([
             'valor' => $data['valor'],
-            'por_remplazo' => $data['por_remplazo'],
-            'periodo_id' => Periodo::actual()->id
+            'por_remplazo' => $data['por_remplazo']
         ]);
         if($result){
             if($data['por_remplazo']){

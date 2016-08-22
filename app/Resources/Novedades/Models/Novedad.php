@@ -5,6 +5,20 @@ use App\Resources\Empleados\Models\Empleado;
 
 trait Novedad
 {
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model)
+        {
+            $model->setPeriodoActual();
+        });
+    }
+
+    protected function setPeriodoActual()
+    {
+        $this->attributes['periodo_id'] = Periodo::actual()->id;
+    }
 
     public function empleado()
     {

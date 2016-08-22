@@ -1,7 +1,6 @@
 <?php namespace App\Resources\Novedades\Viajes;
 
 use App\Resources\Novedades\Models\Viaje;
-use App\Resources\Novedades\Models\Periodo;
 use Bosnadev\Repositories\Eloquent\Repository;
 
 class ViajesRepository extends Repository
@@ -20,12 +19,6 @@ class ViajesRepository extends Repository
     public function all($columns = array('*'))
     {
         return $this->model->periodoActual()->get();
-    }
-
-    public function create(array $data)
-    {
-        $data['periodo_id'] = Periodo::actual()->id;
-        return parent::create($data);
     }
 
     public function update(array $data, $id, $attribute = "id")
