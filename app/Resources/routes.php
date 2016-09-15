@@ -12,6 +12,11 @@
 */
 
 $app->get('/', function () use ($app) {
+    $date = "2016-08-31";
+    $fecha = new DateTime("2016-08-31");
+    var_dump($fecha);
+    $fecha->add(new DateInterval('P1D'));
+    var_dump($fecha);
     return $app->version();
 });
 
@@ -20,7 +25,6 @@ $api->version('v1', function ($api) {
     include 'Auth/routes.php';
     include 'Empleados/routes.php';
     $api->group(['middleware' => 'api.auth'], function ($api) {
-        include 'JornadasLaborales/routes.php';
         include 'QuejasyReclamos/routes.php';
         include 'Novedades/routes.php';
     });
