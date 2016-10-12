@@ -9,6 +9,7 @@ namespace App\Resources\Empleados\Repositories;
 
 use App\Resources\Empleados\Models\Empleado;
 use Bosnadev\Repositories\Eloquent\Repository;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class EmpleadosRepository extends Repository
@@ -30,19 +31,27 @@ class EmpleadosRepository extends Repository
         return parent::find($cedula, $columns);
     }
 
-    public function get($filters)
+    /**
+     * @param array $filters
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function get($filters = array())
     {
-        $query = Empleado::query();
-        $query = $this->applyFilters($query, $filters);
+        $query = $this->applyFilters($this->model, $filters);
         return $query->get();
     }
 
-    private function applyFilters($query, $filters)
+    /**
+     * @param Builder $query
+     * @param array $filters
+     * @return Builder
+     */
+    private function applyFilters($query, array $filters)
     {
-        $distrito = $filters['distrito'] ? $filters['distrito'] : '';
-        $area = $filters['area'] ? $filters['area'] : '';
-        $vinculacion = $filters['vinculacion'] ? $filters['vinculacion'] : '';
-        $cargo = $filters['cargo'] ? $filters['cargo'] : '';
+        $distrito = array_key_exists('distrito', $filters) ? $filters['distrito'] : '';
+        $area = array_key_exists('area', $filters) ? $filters['area'] : '';
+        $vinculacion = array_key_exists('vinculacion', $filters) ? $filters['vinculacion'] : '';
+        $cargo = array_key_exists('cargo', $filters) ? $filters['cargo'] : '';
         $query->whereHas('contrato', function ($q) use($distrito, $area, $vinculacion, $cargo) {
             if ($distrito) {
                 $q->where('id_co', '=', $distrito);
